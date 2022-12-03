@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DissertationProject.Data.Migrations
+namespace DissertationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -94,6 +94,28 @@ namespace DissertationProject.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1a4df6c2-e479-40eb-8135-d492174424f2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "76a518b4-92f0-4b97-b4c2-86bb109ef976",
+                            Email = "admin@moneytree.com",
+                            EmailConfirmed = false,
+                            Fname = "Admin",
+                            Income = 0f,
+                            JobName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MONEYTREE.COM",
+                            NormalizedUserName = "ADMIN@MONEYTREE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPADxTQX72wZSa7c+Qc1rKb4REhN+Jp55CYA/HkWIbvdL1P5Q8A7F2vo9fPvdUSgdw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e5fde7e1-2d7d-4fa8-8231-0444093681c9",
+                            Sname = "Admin",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@moneytree.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -120,6 +142,36 @@ namespace DissertationProject.Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1a43ecdc-e161-4cc2-8476-004e461304fd",
+                            ConcurrencyStamp = "48c7b087-13b9-46bd-b10f-9566e89276ab",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "875ea618-c65e-4eac-9c0f-4a59f1ddaa2c",
+                            ConcurrencyStamp = "7684f586-4a4d-4b14-b09c-a1a936cd4c8d",
+                            Name = "Family_Head",
+                            NormalizedName = "FAMILY_HEAD"
+                        },
+                        new
+                        {
+                            Id = "fd32bd40-c6ba-474a-b959-55a3a8941347",
+                            ConcurrencyStamp = "3a8cfa8f-22b3-4323-ae1a-11884ac4ba6d",
+                            Name = "Family_Member",
+                            NormalizedName = "FAMILY_MEMBER"
+                        },
+                        new
+                        {
+                            Id = "35981c10-0352-46be-9b0b-769ce6d85af9",
+                            ConcurrencyStamp = "16e1cc37-4269-4096-880c-53b14399beff",
+                            Name = "Family_Kid",
+                            NormalizedName = "FAMILY_KID"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -205,6 +257,28 @@ namespace DissertationProject.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1a4df6c2-e479-40eb-8135-d492174424f2",
+                            RoleId = "1a43ecdc-e161-4cc2-8476-004e461304fd"
+                        },
+                        new
+                        {
+                            UserId = "1a4df6c2-e479-40eb-8135-d492174424f2",
+                            RoleId = "875ea618-c65e-4eac-9c0f-4a59f1ddaa2c"
+                        },
+                        new
+                        {
+                            UserId = "1a4df6c2-e479-40eb-8135-d492174424f2",
+                            RoleId = "fd32bd40-c6ba-474a-b959-55a3a8941347"
+                        },
+                        new
+                        {
+                            UserId = "1a4df6c2-e479-40eb-8135-d492174424f2",
+                            RoleId = "35981c10-0352-46be-9b0b-769ce6d85af9"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
