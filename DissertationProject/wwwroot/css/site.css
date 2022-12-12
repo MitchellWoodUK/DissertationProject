@@ -16,3 +16,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#navbar-bg {
+    background-color: #4FA6B9;
+}
+
+.nav-icon {
+    color: #34545B;
+    
+}

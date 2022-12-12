@@ -79,6 +79,8 @@ namespace DissertationProject.Areas.Identity.Pages.Account
             [Display(Name = "Surname")]
             public string Sname { get; set; }
 
+            public string JobName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -109,7 +111,7 @@ namespace DissertationProject.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, Fname = Input.Fname, Sname = Input.Sname};
+                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, Fname = Input.Fname, Sname = Input.Sname, JobName = Input.JobName};
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
