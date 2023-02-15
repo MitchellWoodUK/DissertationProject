@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&display=swap');
+
 html {
   font-size: 14px;
 }
@@ -24,4 +26,19 @@ body {
 .nav-icon {
     color: #34545B;
     height: 10vh;
+}
+
+#sidebar {
+    background-color: #E1E8EA;
+    height: 100vh;
+}
+
+.heading-text {
+    font-family: Montserrat;
+    font-weight: 700;
+}
+
+.subheading-text {
+    font-family: Montserrat;
+    font-weight: 500;
 }
