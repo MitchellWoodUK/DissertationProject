@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DissertationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221203174556_init")]
+    [Migration("20230409144306_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace DissertationProject.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("FamilyId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Fname")
@@ -111,13 +114,50 @@ namespace DissertationProject.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MONEYTREE.COM",
                             NormalizedUserName = "ADMIN@MONEYTREE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPADxTQX72wZSa7c+Qc1rKb4REhN+Jp55CYA/HkWIbvdL1P5Q8A7F2vo9fPvdUSgdw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMHHdB/FyU1ya7fwjcbMjP2Snnwy6xy1BhzmGSDwoVqi0rY6z9ORmV7r1/2vfINIQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e5fde7e1-2d7d-4fa8-8231-0444093681c9",
+                            SecurityStamp = "991a10c0-7b45-496f-92f8-997414682ad9",
                             Sname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin@moneytree.com"
                         });
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FamilyId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FamilyMemberId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
+
+                    b.HasIndex("FamilyMemberId");
+
+                    b.ToTable("FamilyMembers");
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Families");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -302,6 +342,25 @@ namespace DissertationProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>
+                {
+                    b.HasOne("DissertationProject.Models.FamilyModel", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DissertationProject.Models.CustomUserModel", "FamilyMember")
+                        .WithMany()
+                        .HasForeignKey("FamilyMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+
+                    b.Navigation("FamilyMember");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

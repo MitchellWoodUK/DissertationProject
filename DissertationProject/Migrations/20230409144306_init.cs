@@ -32,6 +32,7 @@ namespace DissertationProject.Migrations
                     Sname = table.Column<string>(type: "TEXT", nullable: false),
                     JobName = table.Column<string>(type: "TEXT", nullable: false),
                     Income = table.Column<float>(type: "REAL", nullable: false),
+                    FamilyId = table.Column<int>(type: "INTEGER", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -50,6 +51,19 @@ namespace DissertationProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Families",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Families", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +172,32 @@ namespace DissertationProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FamilyMembers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FamilyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FamilyMemberId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamilyMembers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FamilyMembers_AspNetUsers_FamilyMemberId",
+                        column: x => x.FamilyMemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FamilyMembers_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -180,8 +220,8 @@ namespace DissertationProject.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "Fname", "Income", "JobName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Sname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1a4df6c2-e479-40eb-8135-d492174424f2", 0, "76a518b4-92f0-4b97-b4c2-86bb109ef976", "admin@moneytree.com", false, "Admin", 0f, "Admin", false, null, "ADMIN@MONEYTREE.COM", "ADMIN@MONEYTREE.COM", "AQAAAAEAACcQAAAAEPADxTQX72wZSa7c+Qc1rKb4REhN+Jp55CYA/HkWIbvdL1P5Q8A7F2vo9fPvdUSgdw==", null, false, "e5fde7e1-2d7d-4fa8-8231-0444093681c9", "Admin", false, "admin@moneytree.com" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FamilyId", "Fname", "Income", "JobName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Sname", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1a4df6c2-e479-40eb-8135-d492174424f2", 0, "76a518b4-92f0-4b97-b4c2-86bb109ef976", "admin@moneytree.com", false, null, "Admin", 0f, "Admin", false, null, "ADMIN@MONEYTREE.COM", "ADMIN@MONEYTREE.COM", "AQAAAAEAACcQAAAAEMHHdB/FyU1ya7fwjcbMjP2Snnwy6xy1BhzmGSDwoVqi0rY6z9ORmV7r1/2vfINIQA==", null, false, "991a10c0-7b45-496f-92f8-997414682ad9", "Admin", false, "admin@moneytree.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -239,6 +279,16 @@ namespace DissertationProject.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FamilyMembers_FamilyId",
+                table: "FamilyMembers",
+                column: "FamilyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FamilyMembers_FamilyMemberId",
+                table: "FamilyMembers",
+                column: "FamilyMemberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -259,10 +309,16 @@ namespace DissertationProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "FamilyMembers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Families");
         }
     }
 }
