@@ -7,6 +7,11 @@ namespace DissertationProject.Data
 {
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
+        //public DbSet<CustomUserModel> Users { get; set; }
+        public DbSet<FamilyModel> Families { get; set; }
+        public DbSet<FamilyMembersModel> FamilyMembers { get; set; }
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

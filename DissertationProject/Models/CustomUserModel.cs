@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DissertationProject.Models
 {
@@ -13,5 +14,8 @@ namespace DissertationProject.Models
         public string JobName { get; set; }
 
         public float Income { get; set; }
+
+        [ForeignKey("FamilyMembers")]
+        public int? FamilyId { get; set; }
     }
 }

@@ -50,58 +50,58 @@
             <!--Settings to change the users family settings-->
             <h5 class="subheading-text pt-4 mt-4">Family</h5>
             @{
-            //Checks to see if the model is empty or not, if it is empty then allow the user to set up a family account.
-            //If the list is not empty then show edit current family account.
-            bool hasElements = !Model.Any();
-            if (hasElements)
-            {
-                <p>Create or Join an Existing Family Account</p>
-                <!--Needs a button to create a new family entry, and a button to join an existing family and set the role.-->
-                <!--Need to check if the user is already in a family or not and display different options if that is the case.-->
+                //Checks to see if the model is empty or not, if it is empty then allow the user to set up a family account.
+                //If the list is not empty then show edit current family account.
+                bool hasElements = !Model.Any();
+                if (hasElements)
+                {
+                    <p>Create or Join an Existing Family Account</p>
+                    <!--Needs a button to create a new family entry, and a button to join an existing family and set the role.-->
+                    <!--Need to check if the user is already in a family or not and display different options if that is the case.-->
 
-                <div class="col mt-3">
-                    <!--Create a new family-->
-                    <p class="mb-5 text">Enter a unique username that can be used to link your families accounts together.</p>
-                    <form method="post" class="my-3">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Family Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100">Submit Changes</button>
+                    <div class="col mt-3">
+                        <!--Create a new family-->
+                        <p class="mb-5 text">Enter a unique username that can be used to link your families accounts together.</p>
+                        <form method="post" class="my-3">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Family Name</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100">Submit Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="col mt-3">
+                        <!--Join an existing family-->
+                        <p class="mb-5 text">Enter your families unqiue username to link your account to that family.</p>
+                        <form method="post" class="my-3">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Family Name</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100">Submit Changes</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                <!--Need to add parts that show the users current linked family and information.-->
+                @foreach(var family in Model)
+                {
+                    <h6 class="subheading-text">Current Family Details:</h6>
+                    <form method="post" class="mt-3">
+                        <!--Hidden values to hand back the necessary data back to the controller-->
+                        <input type="hidden" name="id" value="@family.Id" />
+                        <input type="hidden" name="family" value="@family.Family" />
+                        <input type="hidden" name="familyMember" value="@family.FamilyMember" />
+
+                        <p>Family Username: @family.Family.Name</p>
+
+
+                        <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger mt-3">Unlink Family Account</button>
                     </form>
-                </div>
-
-                <div class="col mt-3">
-                    <!--Join an existing family-->
-                    <p class="mb-5 text">Enter your families unqiue username to link your account to that family.</p>
-                    <form method="post" class="my-3">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Family Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100">Submit Changes</button>
-                    </form>
-                </div>
+                }
             }
-            else
-            {
-            <!--Need to add parts that show the users current linked family and information.-->
-            @foreach(var family in Model)
-            {
-                <h6 class="subheading-text">Current Family Details:</h6>
-                <form method="post" class="mt-3">
-                    <!--Hidden values to hand back the necessary data back to the controller-->
-                    <input type="hidden" name="id" value="@family.Id" />
-                    <input type="hidden" name="family" value="@family.Family" />
-                    <input type="hidden" name="familyMember" value="@family.FamilyMember" />
-
-                    <p>Family Username: @family.Family.Name</p>
-
-
-                    <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger mt-3">Unlink Family Account</button>
-                </form>
-            }
-        }
             }
 
         </div>
