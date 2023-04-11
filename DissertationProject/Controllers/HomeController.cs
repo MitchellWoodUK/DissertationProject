@@ -120,7 +120,9 @@ namespace DissertationProject.Controllers
                 var checkUnique = await _db.Families.FirstOrDefaultAsync(i => i.Name == family.Name);
                 if (checkUnique == null)
                 {
+                    //Creates the family and saves it to the database.
                     await _db.Families.AddAsync(family);
+                    await _db.SaveChangesAsync();
                 }
                 else
                 {
@@ -129,15 +131,19 @@ namespace DissertationProject.Controllers
                 }
 
                 //Need to create the FamilyMemberModel
-
+                //Creates the empty family members model.
                 FamilyMembersModel members = new FamilyMembersModel();
+                //Gets the user that is logged in.
                 CustomUserModel user = await _userManager.GetUserAsync(User);
-                members.Family = family;
+                //Get the family that was just created.
+                members.Family = await _db.Families.FirstOrDefaultAsync(i => i.Name == family.Name);
+                //Adds the family and user to the family members model.
                 members.FamilyMember = user;
+                //Save the changes.
                 await _db.FamilyMembers.AddAsync(members);
 
                 //Need to add te familyId to the customusermodel.
-                user.FamilyId = family.Id;
+                user.FamilyId = members.Family.Id;
                 _db.Users.Update(user);
 
                 //Save all the changes
@@ -172,7 +178,7 @@ namespace DissertationProject.Controllers
                         //Save the changes.
                         await _db.FamilyMembers.AddAsync(members);
                         //Need to add te familyId to the customusermodel.
-                        user.FamilyId = family.Id;
+                        user.FamilyId = members.Family.Id;
                         _db.Users.Update(user);
 
                         await _db.SaveChangesAsync();
