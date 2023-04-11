@@ -5,6 +5,7 @@
     ViewData["Title"] = "Settings";
 
     CustomUserModel user = await UserManager.GetUserAsync(User);
+    var role = await UserManager.GetRolesAsync(user);
 
 }
 
@@ -13,19 +14,26 @@
 <div class="container my-5">
     <div class="row">
         <h1 class="heading-text mb-0">Settings</h1>
-        <p class="mb-3 pt-0 mt-0">@User.Identity?.Name</p>
+        <p class="mb-3 pt-0 mt-0">Username: @User.Identity?.Name</p>
+        @{
+            bool hasRole = role.Any();
+            if (hasRole)
+            {
+                <p class="mb-3 pt-0 mt-0">Current Role: @role[0]</p>
+            }
+        }
         <div class="row">
             <!--Settings to change the users basic account details.-->
             <h5 class="subheading-text pt-4">Account</h5>
             <h6>Change all or specific account details:</h6>
             @if (TempData["Success"] != null)
-                {
+            {
                 <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
-                }
+            }
             @if (TempData["Danger"] != null)
-                {
+            {
                 <p class="alert alert-danger" id="successMessage">@TempData["Danger"]</p>
-                }
+            }
             <form method="post" class="my-3">
                 <input type="hidden" name="userId" value="@user.Id" />
                 <div class="mb-3">
@@ -89,7 +97,8 @@
                 else
                 {
                     <!--Need to add parts that show the users current linked family and information.-->
-                    @foreach(var family in Model){
+                    @foreach (var family in Model)
+                    {
                         <h6 class="subheading-text">Current Family Details:</h6>
                         <form method="post" class="my-3">
                             <input type="hidden" name="familyId" value="@family.Family.Id" />
@@ -98,7 +107,7 @@
                                 <input type="text" class="form-control" id="name" name="name" placeholder="@family.Family.Name">
                             </div>
                             <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger">Unlink Account</button>
-                      </form>
+                        </form>
                     }
                 }
             }
@@ -116,7 +125,7 @@
 
 
 
-<script>setTimeout(function () {
+<script>    setTimeout(function () {
         var successMessage = document.getElementById('successMessage');
         if (successMessage != null) {
             successMessage.remove();

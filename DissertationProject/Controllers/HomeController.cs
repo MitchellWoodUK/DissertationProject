@@ -146,6 +146,9 @@ namespace DissertationProject.Controllers
                 user.FamilyId = members.Family.Id;
                 _db.Users.Update(user);
 
+                //Need to add the family head role to the user.
+                await _userManager.AddToRoleAsync(user, "Family_Head");
+
                 //Save all the changes
                 await _db.SaveChangesAsync();
 
@@ -205,9 +208,6 @@ namespace DissertationProject.Controllers
 
         public async Task<IActionResult> UnlinkFamily(FamilyModel model)
         {
-            //NEED TO FIX- CONTENT RETURNS AS NULL
-
-
             //Get the user who is logged in.
             CustomUserModel user = await _userManager.GetUserAsync(User);
 
