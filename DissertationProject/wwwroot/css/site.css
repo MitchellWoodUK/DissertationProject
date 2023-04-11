@@ -28,17 +28,17 @@ body {
     height: 10vh;
 }
 
-#sidebar {
-    background-color: #E1E8EA;
-    height: 100vh;
-}
-
 .heading-text {
     font-family: Montserrat;
     font-weight: 700;
 }
 
 .subheading-text {
+    font-family: Montserrat;
+    font-weight: 600;
+}
+
+.text{
     font-family: Montserrat;
     font-weight: 500;
 }

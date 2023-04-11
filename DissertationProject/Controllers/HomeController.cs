@@ -34,12 +34,12 @@ namespace DissertationProject.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Settings()
+        public async Task<IActionResult> Settings() 
         {
             //Need to return a list that includes the user information, family information.
             var FMlist = new List<FamilyMembersModel>();
             CustomUserModel user = await _userManager.GetUserAsync(User);
-            if (user.FamilyId != null)
+            if(user.FamilyId != null)
             {
                 var family = await _db.Families.FirstOrDefaultAsync(i => i.Id == user.FamilyId);
                 if (family != null)
@@ -59,7 +59,7 @@ namespace DissertationProject.Controllers
                 }
             }
             return View(FMlist);
-
+           
         }
 
 
@@ -88,7 +88,7 @@ namespace DissertationProject.Controllers
                     {
                         user.JobName = model.JobName;
                     }
-                    if (model.Income != user.Income)
+                    if(model.Income != user.Income)
                     {
                         user.Income = model.Income;
                     }
@@ -109,9 +109,8 @@ namespace DissertationProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFamily(FamilyModel model)
-        {
-            if (model != null)
+        public async Task<IActionResult> CreateFamily(FamilyModel model) {
+            if(model != null)
             {
                 //Need to save the FamilyModel
                 FamilyModel family = new FamilyModel();
@@ -156,7 +155,7 @@ namespace DissertationProject.Controllers
         public async Task<IActionResult> JoinFamily(FamilyModel model)
         {
             //Need to get the family models ID and then create the FamilyMembersModel using that ID.
-            if (model != null)
+            if(model != null)
             {
                 FamilyMembersModel members = new FamilyMembersModel();
                 var family = await _db.Families.FirstOrDefaultAsync(i => i.Name == model.Name);
@@ -166,11 +165,11 @@ namespace DissertationProject.Controllers
                     CustomUserModel user = await _userManager.GetUserAsync(User);
                     //Need to check to see if the user is already part of the family.
                     var checkUser = await _db.FamilyMembers.FirstOrDefaultAsync(i => i.FamilyMember.Id == user.Id);
-                    if (checkUser == null)
+                    if(checkUser == null)
                     {
                         members.Family = family;
                         members.FamilyMember = user;
-                        //Save the changes.S
+                        //Save the changes.
                         await _db.FamilyMembers.AddAsync(members);
                         //Need to add te familyId to the customusermodel.
                         user.FamilyId = family.Id;

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DissertationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230409144306_init")]
+    [Migration("20230406124815_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,6 +91,8 @@ namespace DissertationProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FamilyId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -114,9 +116,9 @@ namespace DissertationProject.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MONEYTREE.COM",
                             NormalizedUserName = "ADMIN@MONEYTREE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMHHdB/FyU1ya7fwjcbMjP2Snnwy6xy1BhzmGSDwoVqi0rY6z9ORmV7r1/2vfINIQA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHT23wGDEhimOVnKI4dp0tzb7IVtfn5nhxxAph0FjSzLuw+BjtAegXQtR/3eEtmrPw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "991a10c0-7b45-496f-92f8-997414682ad9",
+                            SecurityStamp = "1777b536-f11c-491a-949c-c7210acfe63f",
                             Sname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin@moneytree.com"
@@ -342,6 +344,15 @@ namespace DissertationProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("DissertationProject.Models.FamilyModel", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId");
+
+                    b.Navigation("Family");
                 });
 
             modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>

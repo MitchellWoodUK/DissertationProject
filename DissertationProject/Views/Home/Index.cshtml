@@ -1,8 +1,44 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<CustomUserModel> UserManager
+@{
     ViewData["Title"] = "Home Page";
+
+    CustomUserModel user = await UserManager.GetUserAsync(User);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<!--Index page - Links to other pages.-->
+<div <div class="container mt-5 text-center d-flex justify-content-center">
+    <div class="row">
+        <div class="col-4">
+            <div class="card me-5" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Configure Family Settings</h5>
+                    <p class="card-text">Connect your family accounts and manage your finances collaboratively with our family settings feature. Get started today!</p>
+                    <a asp-controller="Home" asp-action="Settings" class="btn btn-primary">Family Settings</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card me-5" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

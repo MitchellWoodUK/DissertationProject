@@ -16,6 +16,6 @@ namespace DissertationProject.Models
         public float Income { get; set; }
 
         [ForeignKey("FamilyMembers")]
-        public int? FamilyId { get; set; }
+        public int ?FamilyId { get; set; }
     }
 }
