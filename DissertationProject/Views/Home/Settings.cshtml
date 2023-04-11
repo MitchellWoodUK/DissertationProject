@@ -63,8 +63,8 @@
             @{
                 //Checks to see if the model is empty or not, if it is empty then allow the user to set up a family account.
                 //If the list is not empty then show edit current family account.
-                bool hasElements = !Model.Any();
-                if (hasElements)
+                bool hasElements = Model.Any();
+                if (!hasElements)
                 {
                     <p>Create or Join an Existing Family Account</p>
                     <!--Needs a button to create a new family entry, and a button to join an existing family and set the role.-->
@@ -100,6 +100,13 @@
                     @foreach (var family in Model)
                     {
                         <h6 class="subheading-text">Current Family Details:</h6>
+
+                        //Need to check that the user that is logged in is part of the Family_Head role.
+                        @if (role.Contains("Family_Head"))
+                        {
+                            <h1>head role</h1>
+                        }
+                        <p class="text mt-3">Unlink Account:</p>
                         <form method="post" class="my-3">
                             <input type="hidden" name="familyId" value="@family.Family.Id" />
                             <div class="mb-3">
