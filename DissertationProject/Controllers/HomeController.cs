@@ -197,14 +197,21 @@ namespace DissertationProject.Controllers
             }
         }
 
-        public async Task<IActionResult> UnlinkFamily(FamilyMembersModel model)
+        public async Task<IActionResult> UnlinkFamily(FamilyModel model)
         {
             //NEED TO FIX- CONTENT RETURNS AS NULL
 
 
-            //Finds the user by the Id and then removes the Family account infomation from the CustomUserModel and the FamilyMembersModel.
-            var user = await _userManager.FindByIdAsync(model.FamilyMember.Id);
+            //Get the user who is logged in.
+            CustomUserModel user = await _userManager.GetUserAsync(User);
+
             if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            //Find the family member instance that is linked to the user.
+            var family = await _db.FamilyMembers.FirstOrDefaultAsync(i => i.FamilyMember.Id == user.Id);
+            if (family == null)
             {
                 return RedirectToAction("Index");
             }
@@ -214,7 +221,7 @@ namespace DissertationProject.Controllers
             _db.Users.Update(user);
 
             //Remove the instance in FamilyMembersModel
-            _db.FamilyMembers.Remove(model);
+            _db.FamilyMembers.Remove(family);
 
             //Save changes
             await _db.SaveChangesAsync();
