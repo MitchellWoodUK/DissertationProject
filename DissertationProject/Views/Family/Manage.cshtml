@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<UserRolesViewModel>
+@{
+    ViewData["Title"] = "Settings";
+}
+
+
+<div class="container mt-5">
+    <div class="row">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Income</th>
+                    <th scope="col">Job</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.FamilyMembers.FamilyMember.Fname @item.FamilyMembers.FamilyMember.Sname</th>
+                        <td>@item.FamilyMembers.FamilyMember.Income</td>
+                        <td>@item.FamilyMembers.FamilyMember.JobName</td>
+                        <td>
+                            @foreach (var role in item.Roles)
+                            {
+                                @role <br/>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-controller="Family" asp-action="AddRole" asp-route-id="@item.FamilyMembers.Id">Add Role</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
