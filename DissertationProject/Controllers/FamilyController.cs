@@ -55,13 +55,14 @@ namespace DissertationProject.Controllers
             //Return the list to the view.
             return View(FMlist);
         }
-        /*
+        
         public IActionResult AddRole()
         {
+            //Need to send the users information accross to the view so that a role can be added to their account.
             return View();
         }
 
-
+        /*
         [HttpPost]
         public async Task<IActionResult> AddRole()
         {
