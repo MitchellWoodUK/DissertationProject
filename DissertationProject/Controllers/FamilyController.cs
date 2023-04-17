@@ -55,7 +55,7 @@ namespace DissertationProject.Controllers
             //Return the list to the view.
             return View(FMlist);
         }
-
+        /*
         public IActionResult AddRole()
         {
             return View();
@@ -67,7 +67,7 @@ namespace DissertationProject.Controllers
         {
 
         }
-
+        */
 
 
 
