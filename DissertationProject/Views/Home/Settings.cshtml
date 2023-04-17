@@ -104,7 +104,7 @@
                         //Need to check that the user that is logged in is part of the Family_Head role.
                         @if (role.Contains("Family_Head"))
                         {
-                            <h1>head role</h1>
+                            <a class="btn btn-primary mt-3" asp-controller="Family" asp-action="Manage">Manage Linked Accounts</a>
                         }
                         <p class="text mt-3">Unlink Account:</p>
                         <form method="post" class="my-3">
