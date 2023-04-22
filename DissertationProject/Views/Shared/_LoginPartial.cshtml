@@ -3,24 +3,36 @@
 @inject UserManager<CustomUserModel> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark"><i class="bi bi-box-arrow-right nav-icon"></i></button>
-        </form>
-    </li>
-    <li>
-        <a class="nav-link" asp-controller="Home" asp-action="Settings"><i class="bi bi-gear"></i></a>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-person-circle nav-icon" ></i></a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        CustomUserModel currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
+        //Checks if the user is an admin.
+        if (await UserManager.IsInRoleAsync(currentUser, "Admin"))
+        {
+            //Displays the admin menu.
+            <div class="dropdown mx-2">
+                <a class="btn btn-light dropdown-toggle" href="" role="button" id="admin" data-bs-toggle="dropdown" aria-expanded="false">Admin Menu</a>
+                <ul class="dropdown-menu" aria-labelledby="admin">
+                    <li><a class="nav-link" asp-area="Admin" asp-controller="FamilyAdmin" asp-action="Manage">Manage Familys</a></li>
+                </ul>
+            </div>
+        }
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark"><i class="bi bi-box-arrow-right nav-icon"></i></button>
+            </form>
+        </li>
+        <li>
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Settings"><i class="bi bi-gear"></i></a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-person-circle nav-icon"></i></a>
+        </li>
+    }
 </ul>
