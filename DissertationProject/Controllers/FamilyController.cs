@@ -55,20 +55,49 @@ namespace DissertationProject.Controllers
             //Return the list to the view.
             return View(FMlist);
         }
-        
-        public IActionResult AddRole()
+
+        public async Task<IActionResult> AddRole(string id)
         {
+            //Find the user that has been passed in through the method.
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             //Need to send the users information accross to the view so that a role can be added to their account.
-            return View();
+            return View(user);
         }
 
-        /*
+
         [HttpPost]
-        public async Task<IActionResult> AddRole()
+        public async Task<IActionResult> AddRole(ManageUserRolesViewModel model)
         {
+            //Assigns the user and the role to variables.
+            var user = await _userManager.FindByIdAsync(model.Member.Id);
+            var role = model.Role;
+
+            //Need to remove from any existing roles first and then add to the new role.
+            //Remove from existing roles.
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+            //Add to new role.
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, role);
+
+                //Successful
+                TempData["Success"] = "Users Role Changed!";
+                return RedirectToAction("Manage");
+            }
+            else
+            {
+                TempData["Danger"] = "Error Adding Role!";
+                return RedirectToAction("Manage");
+            }
 
         }
-        */
 
 
 
