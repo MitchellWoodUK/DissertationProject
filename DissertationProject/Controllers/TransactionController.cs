@@ -52,5 +52,43 @@ namespace DissertationProject.Controllers
             }
             return RedirectToAction("ViewAll");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveMonth()
+        {
+            //Need to remove the past month from the transactions in the database.
+            var date = DateTime.Now;
+            var month = date.Month;
+            var year = date.Year;
+            CustomUserModel user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                var familyId = user.FamilyId;
+                var transaction = _db.FamilyTransactions.Where(i => i.FamilyId == familyId && i.Date.Month < month).ToList();
+                if (transaction != null)
+                {
+                    _db.FamilyTransactions.RemoveRange(transaction);
+                    _db.SaveChanges();
+                }
+            }
+            TempData["Success"] = "Past Month Deleted!";
+            return RedirectToAction("ViewAll");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTransaction(int id)
+        {
+            //Need to delete a transaction from the database.
+            var transaction = _db.FamilyTransactions.Where(i => i.Id == id).FirstOrDefault();
+            if (transaction != null)
+            {
+                _db.FamilyTransactions.Remove(transaction);
+                _db.SaveChanges();
+            }
+            TempData["Success"] = "Transaction Deleted!";
+            return RedirectToAction("ViewAll");
+        }
+
     }
 }
