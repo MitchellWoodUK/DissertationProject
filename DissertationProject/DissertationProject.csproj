@@ -19,6 +19,7 @@
     <None Include="Properties\serviceDependencies.local.json" />
     <None Include="wwwroot\css\site.css" />
     <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\Images\money.png" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />

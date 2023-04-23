@@ -16,7 +16,12 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #E1E8EA;
+}
+
+.white-bg{
+    background-color: white;
 }
 
 #navbar-bg {
@@ -41,4 +46,17 @@ body {
 .text{
     font-family: Montserrat;
     font-weight: 500;
+}
+
+.white-text{
+    color: #FFFFFF;
+}
+
+.card-img{
+    width: 10vw;
+
+}
+
+.btn-col {
+    background-color: #4FA6B9;
 }

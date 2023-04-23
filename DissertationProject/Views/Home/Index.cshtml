@@ -8,37 +8,67 @@
 
 
 <!--Index page - Links to other pages.-->
-<div <div class="container mt-5 text-center d-flex justify-content-center">
-    <div class="row">
-        <div class="col-4">
-            <div class="card me-5" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Configure Family Settings</h5>
-                    <p class="card-text">Connect your family accounts and manage your finances collaboratively with our family settings feature. Get started today!</p>
-                    <a asp-controller="Home" asp-action="Settings" class="btn btn-primary">Family Settings</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card me-5" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
+<div class="container mt-5">
+    <div class="row white-bg py-4 ps-2">
+        <h1 class="subheading-text">Good Morning @user.Fname</h1>
+        <h4 class="text">Here is your daily report...</h4>
+    </div>
+
+    <div class="row text-center mt-5">
+
+        <div class="col">
             <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <div class="row">
+                    <div class="col-6">
+                        <img src="~/images/settings.gif" alt="settings" class="card-img p-3 d-flex justify-content-center">
+                    </div>
+                    <div class="col-6">
+                        <h5 class="card-title mt-4">Configure Family Settings</h5>
+                    </div>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p class="card-text ">Connect your family accounts and manage your finances collaboratively with our family settings feature. Get started today!</p>
+                    <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Family Settings</a>
                 </div>
             </div>
+
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="row">
+                    <div class="col-6">
+                        <img src="~/images/credit-card.gif" alt="transactions" class="card-img p-3 d-flex justify-content-center">
+                    </div>
+                    <div class="col-6">
+                        <h5 class="card-title mt-4">Transaction Manager</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text ">Effortlessly track and manage all transactions with our user-friendly transaction manager. Try it now!</p>
+                    <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Transaction Manager</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="row">
+                    <div class="col-6">
+                        <img src="~/images/receipt.gif" alt="bills" class="card-img p-3 d-flex justify-content-center">
+                    </div>
+                    <div class="col-6">
+                        <h5 class="card-title mt-4">Bill Manager</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text ">Never miss a bill again with our handy bills manager. Stay on top of your finances today!</p>
+                    <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Bill Manager</a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

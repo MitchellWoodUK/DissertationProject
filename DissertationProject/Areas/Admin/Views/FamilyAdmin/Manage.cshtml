@@ -21,6 +21,7 @@
                     <th scope="col"></th>
                     <th scope="col">Family Name</th>
                     <th scope="col">Amount of Users</th>
+                    <th scope="col">Users</th>
                     <th scope="col">Manage</th>
                 </tr>
             </thead>
@@ -31,6 +32,13 @@
                         <th scope="row"></th>
                         <td>@family.Family.Name</td>
                         <td>@family.FamilyMembers.Count</td>
+                        <td>
+                            <!--Print the individual users names-->
+                            @foreach (var user in family.FamilyMembers)
+                            {
+                                //@user.FamilyMember.Fname @user.FamilyMember.Sname <br />
+                            }
+                        </td>
                         <td>
                             @if (family.FamilyMembers.Count == 0)
                             {
