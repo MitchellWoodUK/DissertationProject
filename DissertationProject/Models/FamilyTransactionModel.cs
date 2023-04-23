@@ -25,5 +25,8 @@ namespace DissertationProject.Models
 
         [Required]
         public float Amount { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 }

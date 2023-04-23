@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FamilyTransactionModel>
+@{
+    ViewData["Title"] = "All Transaction";
+}
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-info mb-5" asp-controller="Transaction" asp-action="AddTransaction">New Transaction</a>
+        </div>
+
+    </div>
+    <div class="row">
+        <h3 class="heading-text">All Transaction's for your Family:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Transaction Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Amount</td>
+                        <td>@item.TransactionType</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
