@@ -14,61 +14,63 @@
         <h4 class="text">Here is your daily report...</h4>
     </div>
 
-    <div class="row text-center mt-5">
+    <div class=" d-flex justify-content-center mt-5">
+        <div class="row text-center">
 
-        <div class="col">
-            <div class="card homecards" style="width: 18rem;">
-                <div class="row">
-                    <div class="col-6">
-                        <img src="~/images/settings.gif" alt="settings" class="card-img p-3 d-flex justify-content-center">
+            <div class="col mb-3">
+                <div class="card mx-5 homecards" style="width: 18rem;">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="~/images/settings.gif" alt="settings" class="card-img p-3 d-flex justify-content-center">
+                        </div>
+                        <div class="col-6">
+                            <h5 class="card-title mt-4">Configure Family Settings</h5>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <h5 class="card-title mt-4">Configure Family Settings</h5>
+                    <div class="card-body">
+                        <p class="card-text ">Connect your family accounts and manage your finances collaboratively with our family settings feature. Get started today!</p>
+                        <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Family Settings</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text ">Connect your family accounts and manage your finances collaboratively with our family settings feature. Get started today!</p>
-                    <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Family Settings</a>
-                </div>
+
             </div>
 
-        </div>
+            <div class="col mb-3">
+                <div class="card mx-5 homecards" style="width: 18rem;">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="~/images/credit-card.gif" alt="transactions" class="card-img p-3 d-flex justify-content-center">
+                        </div>
+                        <div class="col-6">
+                            <h5 class="card-title mt-4">Transaction Manager</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text ">Effortlessly track and manage all transactions with our user-friendly transaction manager. Try it now!</p>
+                        <a asp-controller="Transaction" asp-action="ViewAll" class="btn btn-col white-text w-100">Transaction Manager</a>
+                    </div>
+                </div>
 
-        <div class="col">
-            <div class="card homecards" style="width: 18rem;">
-                <div class="row">
-                    <div class="col-6">
-                        <img src="~/images/credit-card.gif" alt="transactions" class="card-img p-3 d-flex justify-content-center">
-                    </div>
-                    <div class="col-6">
-                        <h5 class="card-title mt-4">Transaction Manager</h5>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="card-text ">Effortlessly track and manage all transactions with our user-friendly transaction manager. Try it now!</p>
-                    <a asp-controller="Transaction" asp-action="ViewAll" class="btn btn-col white-text w-100">Transaction Manager</a>
-                </div>
+
             </div>
 
-
-        </div>
-
-        <div class="col">
-            <div class="card homecards" style="width: 18rem;">
-                <div class="row">
-                    <div class="col-6">
-                        <img src="~/images/receipt.gif" alt="bills" class="card-img p-3 d-flex justify-content-center">
+            <div class="col mb-3">
+                <div class="card mx-5 homecards" style="width: 18rem;">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="~/images/receipt.gif" alt="bills" class="card-img p-3 d-flex justify-content-center">
+                        </div>
+                        <div class="col-6">
+                            <h5 class="card-title mt-4">Bill Manager</h5>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <h5 class="card-title mt-4">Bill Manager</h5>
+                    <div class="card-body">
+                        <p class="card-text ">Never miss a bill again with our handy bills manager. Stay on top of your finances today!</p>
+                        <a asp-controller="Bills" asp-action="ViewAll" class="btn btn-col white-text w-100">Bill Manager</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text ">Never miss a bill again with our handy bills manager. Stay on top of your finances today!</p>
-                    <a asp-controller="Home" asp-action="Settings" class="btn btn-col white-text w-100">Bill Manager</a>
-                </div>
+
             </div>
-
         </div>
     </div>
 </div>
