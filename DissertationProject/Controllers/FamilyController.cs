@@ -1,6 +1,6 @@
 ﻿using System;
 using DissertationProject.Data;
-using DissertationProject.Migrations;
+
 using DissertationProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

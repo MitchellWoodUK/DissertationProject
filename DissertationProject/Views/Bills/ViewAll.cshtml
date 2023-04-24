@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<CustomUserModel> UserManager
+@model IEnumerable<FamilyBillModel>
+@{
+    ViewData["Title"] = "All Bills";
+}
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col d-flex justify-content-end">
+            <a class="btn btn-col white-text mb-5" asp-controller="Bills" asp-action="AddBill">New Bill</a>
+        </div>
+    </div>
+    <div class="row">
+        @if (TempData["Success"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+        }
+        @if (TempData["Danger"] != null)
+        {
+            <p class="alert alert-danger" id="successMessage">@TempData["Danger"]</p>
+        }
+        <h3 class="heading-text">All Bills's for your Family:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Bill Type</th>
+                    <th scope="col">Date Due</th>
+                    <th scope="col">Time Remaining</th>
+                    <th scope="col">Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>£@item.Amount</td>
+                        <td>@item.BillType</td>
+                        <td>@item.DateDue</td>
+                        <td>@item.TimeRemaining</td>
+                        <td>
+                            <form method="post" action="@Url.Action("DeleteBill", "Bills", new { id = @item.Id })" onsubmit="return confirm('Are you sure you want to delete this bill?');">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+            <!--Total Table-->
+            <table class="table d-flex justify-content-end">
+                <thead>
+                    <tr>
+                        <th scope="col">Total Amount:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>£@Model.Sum(x => x.Amount)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    setTimeout(function () {
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage != null) {
+            successMessage.remove();
+        }
+    }, 5000);</script>

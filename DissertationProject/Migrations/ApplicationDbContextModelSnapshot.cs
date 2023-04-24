@@ -112,13 +112,49 @@ namespace DissertationProject.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MONEYTREE.COM",
                             NormalizedUserName = "ADMIN@MONEYTREE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM+V2m1lqaxAy4CxfMT5Dsedr5I+9AbaoKhIQ+pzdg3kO8re2rfXF6y1TRz39JEieQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEl4fAPB/CWXfGni43LDNU1JO96F5mc5ceYhEGPB2UFthlEBjTmr1ePgzCaEonK39g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "51888769-2ddb-4090-948e-f68b671fbd0c",
+                            SecurityStamp = "e9fe2648-269a-4959-8455-008a9455584b",
                             Sname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin@moneytree.com"
                         });
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyBillModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Amount")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("BillType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateOnly>("DateDue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("FamilyId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("TimeRemaining")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
+
+                    b.ToTable("FamilyBills");
                 });
 
             modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>
@@ -167,8 +203,7 @@ namespace DissertationProject.Migrations
                     b.Property<float>("Amount")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("Date")
-                        .IsRequired()
+                    b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -185,9 +220,15 @@ namespace DissertationProject.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FamilyId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FamilyTransactions");
                 });
@@ -376,6 +417,17 @@ namespace DissertationProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DissertationProject.Models.FamilyBillModel", b =>
+                {
+                    b.HasOne("DissertationProject.Models.FamilyModel", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+                });
+
             modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>
                 {
                     b.HasOne("DissertationProject.Models.FamilyModel", "Family")
@@ -402,6 +454,14 @@ namespace DissertationProject.Migrations
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DissertationProject.Models.CustomUserModel", "CustomUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustomUser");
 
                     b.Navigation("Family");
                 });
