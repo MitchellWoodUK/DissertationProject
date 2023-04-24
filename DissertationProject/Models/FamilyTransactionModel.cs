@@ -15,12 +15,18 @@ namespace DissertationProject.Models
         public FamilyModel Family { get; set; }
 
         [Required]
+        [ForeignKey("CustomUser")]
+        public string UserId { get; set; }
+        public CustomUserModel CustomUser { get; set; }
+
+
+        [Required]
         public TransactionTypeEnum TransactionType { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        [Required]
+
         public string Description { get; set; }
 
         [Required]

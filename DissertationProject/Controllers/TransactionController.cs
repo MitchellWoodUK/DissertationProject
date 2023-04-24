@@ -3,6 +3,7 @@ using DissertationProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DissertationProject.Controllers
 {
@@ -20,23 +21,38 @@ namespace DissertationProject.Controllers
             _db = db;
         }
 
+
+
         public async Task<IActionResult> ViewAll()
         {
             //Need to return a list of all transactions that are linked to the current family id of the user that is logged in.
-            var transactionList = new List<FamilyTransactionModel>();
+            var TMList = new List<TransactionUserViewModel>();
             CustomUserModel user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
-                var transaction =  _db.FamilyTransactions.Where(i => i.FamilyId == user.FamilyId).ToList();
-                transactionList = transaction;
+                var transactions = _db.FamilyTransactions.Where(i => i.FamilyId == user.FamilyId).ToList();
+                foreach (var transaction in transactions)
+                {
+                    var TM = new TransactionUserViewModel()
+                    {
+                        Transaction = transaction,
+                        //Find the member that made the transaction by the transaction userid.
+                        Member = await _userManager.FindByIdAsync(transaction.UserId)
+                    };
+                    TMList.Add(TM);
+                }
+
             }
-            return View(transactionList);
+            return View(TMList);
+
         }
+
 
         public IActionResult AddTransaction()
         {
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddTransaction(FamilyTransactionModel transaction)
@@ -44,11 +60,23 @@ namespace DissertationProject.Controllers
             CustomUserModel user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
-                var familyId = (int)user.FamilyId;
-                transaction.FamilyId = familyId;
-                transaction.Date = DateTime.Now;
-                _db.FamilyTransactions.Add(transaction);
-                _db.SaveChanges();
+                if (user.FamilyId != null)
+                {
+                    var familyId = (int)user.FamilyId;
+
+                    transaction.FamilyId = familyId;
+                    transaction.Date = DateTime.Now;
+                    transaction.UserId = user.Id;
+                    transaction.CustomUser = user;
+                    _db.FamilyTransactions.Add(transaction);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    TempData["Danger"] = "You need to be a part of a family first! - Please do this in the settings.";
+                    return RedirectToAction("ViewAll");
+                }
+
             }
             return RedirectToAction("ViewAll");
         }
