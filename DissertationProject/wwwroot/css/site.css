@@ -30,7 +30,7 @@ body {
 
 .nav-icon {
     color: #34545B;
-    height: 10vh;
+    height: 15vh;
 }
 
 .heading-text {
@@ -63,4 +63,8 @@ body {
 
 .homecards{
     height: 43vh;
+}
+
+footer {
+    background-color: #6c757d;
 }
