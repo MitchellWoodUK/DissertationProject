@@ -29,9 +29,41 @@ namespace DissertationProject.Controllers
 
         public IActionResult Index()
         {
-            //Need to add a function that checks if the user is assigned to a family, if not then they need to create one.
-
-            return View();
+            var chartList = new List<ChartViewModel>();
+            //Need to return a list of ChartViewModel from the logged in family.
+            //Need to get the user that is logged in.
+            var user = _userManager.GetUserAsync(User);
+            if(user != null)
+            {
+                //Need to get the family that the user is in.
+                var family = _db.Families.FirstOrDefaultAsync(i => i.Id == user.Result.FamilyId);
+                if(family != null)
+                {
+                    //Need to get the family members that are in the family.
+                    var familyMembers = _db.FamilyMembers.Where(i => i.FamilyMember.FamilyId == family.Result.Id).ToList();
+                    //Need to get the bills that are in the family.
+                    var familyBills = _db.FamilyBills.Where(i => i.FamilyId == family.Result.Id).ToList();
+                    //Need to get the budgets that are in the family.
+                    var familyBudgets = _db.FamilyBudgets.Where(i => i.FamilyId == family.Result.Id).ToList();
+                    //Need to get the transactions that are in the family.
+                    var familyTransactions = _db.FamilyTransactions.Where(i => i.FamilyId == family.Result.Id).ToList();
+                    chartList.Add(new ChartViewModel()
+                    {
+                        Members = familyMembers,
+                        Bills = familyBills,
+                        Budgets = familyBudgets,
+                        Transactions = familyTransactions
+                    });
+                    //return to the view with the list.
+                    return View(chartList);
+                }
+                else
+                {
+                    //If family is null then return an empty list.
+                    return View(chartList);
+                }
+            }
+            return View(chartList);
         }
 
         public async Task<IActionResult> Settings()
