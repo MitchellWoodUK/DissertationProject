@@ -12,6 +12,7 @@ namespace DissertationProject.Data
         public DbSet<FamilyMembersModel> FamilyMembers { get; set; }
         public DbSet<FamilyTransactionModel> FamilyTransactions { get; set; }
         public DbSet<FamilyBillModel> FamilyBills { get; set; }
+        public DbSet<FamilyBudgetModel> FamilyBudgets { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
