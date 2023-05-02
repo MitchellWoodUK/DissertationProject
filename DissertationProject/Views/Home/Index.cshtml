@@ -104,7 +104,7 @@
 
                         <div>
                             <h4 class="subheading-text">Money Remaining for the Month:</h4>
-                            <h3 class="green-text heading-text">£@Math.Round(Model.Sum(m => m.Profit))</h3>
+                            <h3 class="green-text heading-text">£@Math.Round(Model.Sum(m => m.Profit), 2)</h3>
                         </div>
                         <div class="mb-3">
                             <canvas id="moneyRemainingPieChart" width="300"></canvas>
@@ -117,7 +117,7 @@
                     <div class="col white-bg m-2 p-3">
                         <div class="mb-3">
                             <h4 class="subheading-text">Amount Spent on Transactions Over Time:</h4>
-                            <h3 class="red-text heading-text">£@Model.Sum(m => m.Expenses)</h3>
+                            <h3 class="red-text heading-text">£@Math.Round(Model.Sum(m => m.Expenses), 2)</h3>
                         </div>
                         <div class="mb-3">
                             <canvas id="linegraph" width="300"></canvas>
