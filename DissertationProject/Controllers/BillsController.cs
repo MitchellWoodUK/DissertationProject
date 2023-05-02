@@ -58,9 +58,9 @@ namespace DissertationProject.Controllers
                 if (user.FamilyId != null)
                 {
                     var familyId = (int)user.FamilyId;
-                    var day = DateTime.Now;
+                    var date = DateTime.Now;
+                    var day = date.Day;
                     model.FamilyId = familyId;
-                    //model.TimeRemaining = model.DateDue - day;
 
                     _db.FamilyBills.Add(model);
                     _db.SaveChanges();
@@ -70,14 +70,25 @@ namespace DissertationProject.Controllers
                     TempData["Danger"] = "You need to be a part of a family first! - Please do this in the settings.";
                     return RedirectToAction("ViewAll");
                 }
-
             }
             TempData["Success"] = "";
             return RedirectToAction("ViewAll");
-
-
-
         }
+
+        [HttpPost]
+        public IActionResult DeleteBill(int id)
+        {
+            //Need to delete a bill from the database.
+            var bill = _db.FamilyBills.Where(i => i.Id == id).FirstOrDefault();
+            if (bill != null)
+            {
+                _db.FamilyBills.Remove(bill);
+                _db.SaveChanges();
+            }
+            TempData["Success"] = "Bill Deleted!";
+            return RedirectToAction("ViewAll");
+        }
+
     }
 }
 

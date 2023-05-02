@@ -22,15 +22,15 @@ namespace DissertationProject.Models
         public string Name { get; set; }
 
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         public float Amount { get; set; }
 
         [Required]
-        public DateOnly DateDue { get; set; }
+        public int DateDue { get; set; }
 
-        public DateOnly TimeRemaining { get; set; }
+
     }
 }
 
