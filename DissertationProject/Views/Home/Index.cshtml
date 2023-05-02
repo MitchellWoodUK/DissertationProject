@@ -1,11 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<CustomUserModel> UserManager
+@model IEnumerable<ChartViewModel>
 @{
     ViewData["Title"] = "Home Page";
 
     CustomUserModel user = await UserManager.GetUserAsync(User);
     var role = await UserManager.GetRolesAsync(user);
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
 
 
 <!--Index page - Links to other pages.-->
@@ -23,8 +29,6 @@
             <a asp-controller="Home" asp-action="Settings" class="btn btn-danger w-100">Family Settings</a>
         </div>
     }
-
-
 
 
     <div class=" d-flex justify-content-center mt-5">
@@ -67,8 +71,6 @@
                         <a asp-controller="Transaction" asp-action="ViewAll" class="btn btn-col white-text w-100">Transaction Manager</a>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col mb-3">
@@ -92,77 +94,145 @@
             </div>
         </div>
     </div>
+    @{
+        bool hasElements = Model.Any();
+        if (hasElements)
+        {
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col white-bg m-2 p-3">
 
-    <div class="chart my-5">
-        <canvas id="barchart"></canvas>
-    </div>
+                        <div>
+                            <h4 class="subheading-text">Money Remaining for the Month:</h4>
+                            <h3 class="green-text heading-text">£@Math.Round(Model.Sum(m => m.Profit))</h3>
+                        </div>
+                        <div class="mb-3">
+                            <canvas id="moneyRemainingPieChart" width="300"></canvas>
+                        </div>
+                        <div class="d-flex align-self-end">
+                            <a class="text-black subheading-text" asp-area="" asp-controller="Budget" asp-action="Manage">View Your Statement Screen</a>
+                        </div>
+                    </div>
+
+                    <div class="col white-bg m-2 p-3">
+                        <div class="mb-3">
+                            <h4 class="subheading-text">Amount Spent on Transactions Over Time:</h4>
+                            <h3 class="red-text heading-text">£@Model.Sum(m => m.Expenses)</h3>
+                        </div>
+                        <div class="mb-3">
+                            <canvas id="linegraph" width="300"></canvas>
+                        </div>
+                        <div>
+                            <a class="text-black subheading-text" asp-area="" asp-controller="Transaction" asp-action="ViewAll">View Your Transactions Screen</a>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+        }
+    }
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-               integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-               crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 
+<!--Code for charts-->
 <script>
-    var barCanvas = document.getElementById("barchart");
+    //Pie chart for money remaining
+    var moneyRemainingPieChart = document.getElementById("moneyRemainingPieChart");
+    // Extract expenses and profit data from the ChartViewModel
+    var expenses = @Model.Sum(m => m.Expenses);
+    var profit = @Model.Sum(m => m.Profit);
 
-    var Physics = {
-        label: 'Physics',
-        data: [75, 89, 51, 99, 78],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderWidth: 0,
-        lineTension: 0
-    };
-    var Chemistry = {
-        label: 'Chemistry',
-        data: [75, 89, 51, 99, 78],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderWidth: 0,
-        lineTension: 0
-    };
-    var Biology = {
-        label: 'Biology',
-        data: [75, 89, 51, 99, 78],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderWidth: 0,
-        lineTension: 0
-    };
-    var Maths = {
-        label: 'Maths',
-        data: [75, 89, 51, 99, 78],
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderWidth: 0,
-        lineTension: 0
+    var data = {
+        labels: ["Spent", "Remaining"],
+        datasets: [{
+            data: [expenses, profit],
+            backgroundColor: [
+                '#ff4d4d',
+                '#32cd32'
+            ],
+            borderColor: [
+                '#ff4d4d',
+                '#4dbb4d'
+            ],
+            borderWidth: 1
+        }]
     };
 
-    var datasetvalues = {
-        labels: ["John", "Mary", "Asha", "Emily", "Bonnie"],
-        datasets: [Physics, Chemistry, Biology, Maths]
-    }
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            display: true,
+            position: 'bottom'
+        }
+    };
+
+    var moneyRemainingPieChart = new Chart(moneyRemainingPieChart, {
+        type: 'pie',
+        data: data,
+        options: options
+    });
+    
+
+    //line graph showing transactions over time
+
+    var transactionsData = @Html.Raw(Json.Serialize(Model.SelectMany(m => m.Transactions).OrderBy(t => t.Date)));
+
+    var transactionDates = transactionsData.map(function (data) { return data.date; });
+    var transactionAmounts = transactionsData.map(function (data) { return data.amount; });
+
+    var chartData = {
+        labels: transactionDates,
+        datasets: [
+            {
+                label: "Amount Spent",
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
+                data: transactionAmounts
+            }
+        ]
+    };
 
     var chartOptions = {
         scales: {
             xAxes: [{
-                barPercentage: 1,//Percent (0-1) of the available width each bar should
-                categoryPercentage: 0.6,//Percent (0-1) of the available width each category
-
-
-
-            }],
-            yAxes: [{
-                barPercentage: 1,
-                categoryPercentage: 0.6,
-                ticks: {
-                    beginAtZero: true
+                type: 'time',
+                distribution: 'linear',
+                time: {
+                    unit: 'month',
+                    displayFormats: {
+                        month: 'MMM YYYY'
+                    }
                 }
             }],
-        }
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: function (value, index, values) {
+                        return '$' + value;
+                    }
+                }
+            }]
+        },
+        legend: {
+            display: true,
+            position: 'bottom'
+        },
+        responsive: true
     };
 
-
-
-    var barChart = new Chart(barCanvas, {
-        type: 'bar',
-        data: datasetvalues,
+    var ctx = document.getElementById('linegraph').getContext('2d');
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
         options: chartOptions
-    });</script>
+    });
+
+
+</script>

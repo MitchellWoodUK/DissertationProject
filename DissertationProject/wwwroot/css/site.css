@@ -55,6 +55,13 @@ body {
 .white-text {
     color: #FFFFFF;
 }
+.green-text {
+    color: #32cd32;
+}
+
+.red-text{
+    color: #e10c00;
+}
 
 .card-img {
     width: 10vw;

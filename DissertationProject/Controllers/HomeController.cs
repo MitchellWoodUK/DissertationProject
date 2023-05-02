@@ -47,12 +47,22 @@ namespace DissertationProject.Controllers
                     var familyBudgets = _db.FamilyBudgets.Where(i => i.FamilyId == family.Result.Id).ToList();
                     //Need to get the transactions that are in the family.
                     var familyTransactions = _db.FamilyTransactions.Where(i => i.FamilyId == family.Result.Id).ToList();
+                    //Calculates the total amount of transactions and bills.
+                    float totalTransactions = familyTransactions.Sum(item => item.Amount);
+                    float totalBills = familyBills.Sum(item => item.Amount);
+                    //Calculates the total amount of expenses and profit.
+                    float totalExpenses = totalTransactions + totalBills;
+                    float totalProfit = _db.FamilyBudgets.FirstOrDefault(i => i.FamilyId == family.Result.Id).Budget - totalExpenses;
+
+                    //Creates a chart view model and then adds it to the list made earlier.
                     chartList.Add(new ChartViewModel()
                     {
                         Members = familyMembers,
                         Bills = familyBills,
                         Budgets = familyBudgets,
-                        Transactions = familyTransactions
+                        Transactions = familyTransactions,
+                        Expenses = totalExpenses,
+                        Profit = totalProfit
                     });
                     //return to the view with the list.
                     return View(chartList);
@@ -63,6 +73,7 @@ namespace DissertationProject.Controllers
                     return View(chartList);
                 }
             }
+            //If user is null then return an empty list.
             return View(chartList);
         }
 
