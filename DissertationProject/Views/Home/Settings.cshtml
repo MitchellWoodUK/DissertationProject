@@ -13,19 +13,26 @@
 
 <div class="container my-5">
     <div class="row">
-        <h1 class="heading-text mb-0">Settings</h1>
-        <p class="mb-3 pt-0 mt-0">Username: @User.Identity?.Name</p>
-        @{
-            bool hasRole = role.Any();
-            if (hasRole)
-            {
-                <p class="mb-3 pt-0 mt-0">Current Role: @role[0]</p>
+        <div class="bg-white col p-3">
+            <h1 class="heading-text mb-0">Settings</h1>
+
+            <p class="mb-3 pt-0 mt-0">Username: @User.Identity?.Name</p>
+            @{
+                bool hasRole = role.Any();
+                if (hasRole)
+                {
+                    <p class="mb-3 pt-0 mt-0">Current Role: @role[0]</p>
+                }
             }
-        }
-        <div class="row">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class=" bg-white col p-3 mt-4">
             <!--Settings to change the users basic account details.-->
-            <h5 class="subheading-text pt-4">Account</h5>
-            <h6>Change all or specific account details:</h6>
+            <h5 class="subheading-text pt-2">Account</h5>
+
+            <h6>Change all or specific details for your personal account:</h6>
             @if (TempData["Success"] != null)
             {
                 <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
@@ -52,47 +59,66 @@
                     <label for="income" class="form-label">Income</label>
                     <input type="number" class="form-control" id="income" name="income" placeholder="@user.Income">
                 </div>
-                <button type="submit" asp-controller="Home" asp-action="UpdateUser" class="btn btn-success">Submit Changes</button>
+                <button type="submit" asp-controller="Home" asp-action="UpdateUser" class="btn btn-col w-100 white-text">Save Changes To Your Account</button>
             </form>
         </div>
+    </div>
 
 
-        <div class="row">
+    <div class="row">
+        <div class="bg-white col p-3 mt-4">
             <!--Settings to change the users family settings-->
-            <h5 class="subheading-text pt-4 mt-4">Family</h5>
+            <h5 class="subheading-text pt-2">Family</h5>
             @{
                 //Checks to see if the model is empty or not, if it is empty then allow the user to set up a family account.
                 //If the list is not empty then show edit current family account.
                 bool hasElements = Model.Any();
                 if (!hasElements)
                 {
-                    <p>Create or Join an Existing Family Account</p>
                     <!--Needs a button to create a new family entry, and a button to join an existing family and set the role.-->
                     <!--Need to check if the user is already in a family or not and display different options if that is the case.-->
+                    <div class="row">
+                        <div class="col mt-3">
+                            <!--Create a new family-->
+                            <h5 class="subheading-text pt-2">Create New Family</h5>
 
-                    <div class="col mt-3">
-                        <!--Create a new family-->
-                        <p class="mb-5 text">Enter a unique username that can be used to link your families accounts together.</p>
-                        <form method="post" class="my-3">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Family Name</label>
-                                <input type="text" class="form-control" id="name" name="name">
-                            </div>
-                            <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100">Submit Changes</button>
-                        </form>
+                            <p class="mb-5 text">To create a new family account and become the Family Head enter your surname and a unique PIN below.</p>
+                            <form method="post">
+                                <p class="text">Step 1 - Enter your Surname:</p>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Family Name</label>
+                                    <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <p class="text">Step 2 - Enter a memorable 4 digit PIN:</p>
+                                <div class="mb-3">
+                                    <label for="pin" class="form-label">Family PIN</label>
+                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="4">
+                                </div>
+                                <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100">Create Family</button>
+                            </form>
+                        </div>
+
+                        <div class="col mt-3">
+                            <!--Join an existing family-->
+                            <h5 class="subheading-text pt-2">Join Existing Family</h5>
+
+                            <p class="mb-5 text">To join an existing family and become a Family Member enter the family name and unique PIN below.</p>
+                            <form method="post">
+                                <p class="text">Step 1 - Enter your Families Surname:</p>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Family Name</label>
+                                    <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <p class="text">Step 2 - Enter the memorable 4 digit PIN that is linked to your family:</p>
+                                <div class="mb-3">
+                                    <label for="pin" class="form-label">Family PIN</label>
+                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="4">
+                                </div>
+                                <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100">Join Family</button>
+                            </form>
+                        </div>
                     </div>
 
-                    <div class="col mt-3">
-                        <!--Join an existing family-->
-                        <p class="mb-5 text">Enter your families unqiue username to link your account to that family.</p>
-                        <form method="post" class="my-3">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Family Name</label>
-                                <input type="text" class="form-control" id="name" name="name">
-                            </div>
-                            <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100">Submit Changes</button>
-                        </form>
-                    </div>
                 }
                 else
                 {
@@ -104,27 +130,36 @@
                         //Need to check that the user that is logged in is part of the Family_Head role.
                         @if (role.Contains("Family_Head"))
                         {
-                            <a class="btn btn-primary mt-3" asp-controller="Family" asp-action="Manage">Manage Linked Accounts</a>
+                            <p class="mt-4 text">Manage all accounts linked to your family. Assign Family Member and Family Kid roles.</p>
+                            <a class="btn btn-col white-text mt-2" asp-controller="Family" asp-action="Manage">Manage Linked Accounts</a>
                         }
-                        <p class="text mt-3">Unlink Account:</p>
+                        @if (role.Count == 0)
+                        {
+                            <p class="mt-4 text text-danger">Now that you have joined your family account, the head user for the family needs to assign you with a Family Member or Family Kid role.</p>
+
+                        }
+                        <p class="text mt-4">Unlink Account:</p>
+                        <p class="mt-2 text">Remove your family account.</p>
                         <form method="post" class="my-3">
                             <input type="hidden" name="familyId" value="@family.Family.Id" />
                             <div class="mb-3">
                                 <label for="name" class="form-label">Enter the Correct Family Name To Unlink Account:</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="@family.Family.Name">
                             </div>
-                            <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger">Unlink Account</button>
+                            <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger w-100">Unlink Account</button>
                         </form>
                     }
                 }
             }
-
         </div>
 
 
-        <div class="row">
-            <h5 class="subheading-text pt-4">Accessibility</h5>
+    </div>
 
+
+    <div class="row">
+        <div class="bg-white col p-3 mt-4">
+            <h5 class="subheading-text pt-2">Accessibility</h5>
         </div>
     </div>
 </div>
@@ -132,9 +167,12 @@
 
 
 
-<script>    setTimeout(function () {
+<script>
+    setTimeout(function () {
         var successMessage = document.getElementById('successMessage');
         if (successMessage != null) {
             successMessage.remove();
         }
-    }, 5000);</script>
+    }, 5000);
+
+</script>

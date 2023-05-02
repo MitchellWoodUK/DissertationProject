@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&display=swap');
 
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -20,12 +20,16 @@ body {
     background-color: #E1E8EA;
 }
 
-.white-bg{
+.white-bg {
     background-color: white;
 }
 
-#navbar-bg {
+.navbar-bg {
     background-color: #4FA6B9;
+}
+
+.alt-navbar-bg {
+    background-color: #404F52;
 }
 
 .nav-icon {
@@ -43,28 +47,39 @@ body {
     font-weight: 600;
 }
 
-.text{
+.text {
     font-family: Montserrat;
     font-weight: 500;
 }
 
-.white-text{
+.white-text {
     color: #FFFFFF;
 }
 
-.card-img{
+.card-img {
     width: 10vw;
-
 }
 
 .btn-col {
     background-color: #4FA6B9;
 }
 
-.homecards{
+.btn-red {
+    background-color: #e10c00;
+}
+
+.homecards {
     height: 43vh;
 }
 
 footer {
     background-color: #6c757d;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-red {
+    background-color: white;
 }

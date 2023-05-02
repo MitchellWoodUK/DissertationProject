@@ -34,12 +34,12 @@ namespace DissertationProject.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Settings() 
+        public async Task<IActionResult> Settings()
         {
             //Need to return a list that includes the user information, family information.
             var FMlist = new List<FamilyMembersModel>();
             CustomUserModel user = await _userManager.GetUserAsync(User);
-            if(user.FamilyId != null)
+            if (user.FamilyId != null)
             {
                 var family = await _db.Families.FirstOrDefaultAsync(i => i.Id == user.FamilyId);
                 if (family != null)
@@ -59,7 +59,7 @@ namespace DissertationProject.Controllers
                 }
             }
             return View(FMlist);
-           
+
         }
 
 
@@ -88,7 +88,7 @@ namespace DissertationProject.Controllers
                     {
                         user.JobName = model.JobName;
                     }
-                    if(model.Income != user.Income)
+                    if (model.Income != user.Income)
                     {
                         user.Income = model.Income;
                     }
@@ -109,15 +109,26 @@ namespace DissertationProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFamily(FamilyModel model) {
-            if(model != null)
+        public async Task<IActionResult> CreateFamily(FamilyModel model)
+        {
+            if (model != null)
             {
                 //Need to save the FamilyModel
                 FamilyModel family = new FamilyModel();
                 family.Name = model.Name;
+                //Check that the pin is the correct length.
+                if (model.PIN.Length == 4 && System.Text.RegularExpressions.Regex.IsMatch(model.PIN, "^[0-9]{4}$"))
+                {
+                    family.PIN = model.PIN;
+                }
+                else
+                {
+                    TempData["Danger"] = "PIN needs to be 4 digits long and only numbers!";
+                    return RedirectToAction("Settings");
+                }
 
                 //Need to check that the family name entered is not already in the database.
-                var checkUnique = await _db.Families.FirstOrDefaultAsync(i => i.Name == family.Name);
+                var checkUnique = await _db.Families.FirstOrDefaultAsync(i => i.Name == family.Name && i.PIN == family.PIN);
                 if (checkUnique == null)
                 {
                     //Creates the family and saves it to the database.
@@ -126,7 +137,7 @@ namespace DissertationProject.Controllers
                 }
                 else
                 {
-                    TempData["Danger"] = "Family Username Already Exists, Please Pick Another Name.";
+                    TempData["Danger"] = "Family Already Exists! Please Join!";
                     return RedirectToAction("Settings");
                 }
 
@@ -164,17 +175,17 @@ namespace DissertationProject.Controllers
         public async Task<IActionResult> JoinFamily(FamilyModel model)
         {
             //Need to get the family models ID and then create the FamilyMembersModel using that ID.
-            if(model != null)
+            if (model != null)
             {
                 FamilyMembersModel members = new FamilyMembersModel();
-                var family = await _db.Families.FirstOrDefaultAsync(i => i.Name == model.Name);
+                var family = await _db.Families.FirstOrDefaultAsync(i => i.Name == model.Name && i.PIN == model.PIN);
 
                 if (family != null)
                 {
                     CustomUserModel user = await _userManager.GetUserAsync(User);
                     //Need to check to see if the user is already part of the family.
                     var checkUser = await _db.FamilyMembers.FirstOrDefaultAsync(i => i.FamilyMember.Id == user.Id);
-                    if(checkUser == null)
+                    if (checkUser == null)
                     {
                         members.Family = family;
                         members.FamilyMember = user;
@@ -196,7 +207,7 @@ namespace DissertationProject.Controllers
                 }
                 else
                 {
-                    TempData["Danger"] = "Family Account Doesn't Exist, Please Try Again.";
+                    TempData["Danger"] = "Family Account Doesn't Exist. Please Check Family Name and PIN.";
                     return RedirectToAction("Settings");
                 }
             }
