@@ -93,5 +93,76 @@
         </div>
     </div>
 
-
+    <div class="chart my-5">
+        <canvas id="barchart"></canvas>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+               integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+               crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+<script>
+    var barCanvas = document.getElementById("barchart");
+
+    var Physics = {
+        label: 'Physics',
+        data: [75, 89, 51, 99, 78],
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,
+        lineTension: 0
+    };
+    var Chemistry = {
+        label: 'Chemistry',
+        data: [75, 89, 51, 99, 78],
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,
+        lineTension: 0
+    };
+    var Biology = {
+        label: 'Biology',
+        data: [75, 89, 51, 99, 78],
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,
+        lineTension: 0
+    };
+    var Maths = {
+        label: 'Maths',
+        data: [75, 89, 51, 99, 78],
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,
+        lineTension: 0
+    };
+
+    var datasetvalues = {
+        labels: ["John", "Mary", "Asha", "Emily", "Bonnie"],
+        datasets: [Physics, Chemistry, Biology, Maths]
+    }
+
+    var chartOptions = {
+        scales: {
+            xAxes: [{
+                barPercentage: 1,//Percent (0-1) of the available width each bar should
+                categoryPercentage: 0.6,//Percent (0-1) of the available width each category
+
+
+
+            }],
+            yAxes: [{
+                barPercentage: 1,
+                categoryPercentage: 0.6,
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+        }
+    };
+
+
+
+    var barChart = new Chart(barCanvas, {
+        type: 'bar',
+        data: datasetvalues,
+        options: chartOptions
+    });</script>
