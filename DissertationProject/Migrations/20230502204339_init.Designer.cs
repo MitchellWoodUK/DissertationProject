@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DissertationProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230424184801_init")]
+    [Migration("20230502204339_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,9 +114,9 @@ namespace DissertationProject.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MONEYTREE.COM",
                             NormalizedUserName = "ADMIN@MONEYTREE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEl4fAPB/CWXfGni43LDNU1JO96F5mc5ceYhEGPB2UFthlEBjTmr1ePgzCaEonK39g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPYb3b4zJpQYui0nhvG2VAoGy7xyE2IEzCMUx//nKhm9Ir3A0nc2kol4QVFkJOBhWQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e9fe2648-269a-4959-8455-008a9455584b",
+                            SecurityStamp = "a0a55c62-9508-4e0c-a42f-ca9c99c54c7f",
                             Sname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin@moneytree.com"
@@ -135,11 +135,10 @@ namespace DissertationProject.Migrations
                     b.Property<int>("BillType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("DateDue")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("DateDue")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("FamilyId")
@@ -149,14 +148,30 @@ namespace DissertationProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("TimeRemaining")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FamilyId");
 
                     b.ToTable("FamilyBills");
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyBudgetModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Budget")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("FamilyId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
+
+                    b.ToTable("FamilyBudgets");
                 });
 
             modelBuilder.Entity("DissertationProject.Models.FamilyMembersModel", b =>
@@ -188,6 +203,10 @@ namespace DissertationProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PIN")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -420,6 +439,17 @@ namespace DissertationProject.Migrations
                 });
 
             modelBuilder.Entity("DissertationProject.Models.FamilyBillModel", b =>
+                {
+                    b.HasOne("DissertationProject.Models.FamilyModel", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+                });
+
+            modelBuilder.Entity("DissertationProject.Models.FamilyBudgetModel", b =>
                 {
                     b.HasOne("DissertationProject.Models.FamilyModel", "Family")
                         .WithMany()

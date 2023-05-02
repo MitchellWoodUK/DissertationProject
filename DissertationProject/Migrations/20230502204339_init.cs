@@ -59,7 +59,8 @@ namespace DissertationProject.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    PIN = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,16 +182,35 @@ namespace DissertationProject.Migrations
                     FamilyId = table.Column<int>(type: "INTEGER", nullable: false),
                     BillType = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
                     Amount = table.Column<float>(type: "REAL", nullable: false),
-                    DateDue = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    TimeRemaining = table.Column<DateOnly>(type: "TEXT", nullable: false)
+                    DateDue = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FamilyBills", x => x.Id);
                     table.ForeignKey(
                         name: "FK_FamilyBills_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FamilyBudgets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FamilyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Budget = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamilyBudgets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FamilyBudgets_Families_FamilyId",
                         column: x => x.FamilyId,
                         principalTable: "Families",
                         principalColumn: "Id",
@@ -277,7 +297,7 @@ namespace DissertationProject.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FamilyId", "Fname", "Income", "JobName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Sname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1a4df6c2-e479-40eb-8135-d492174424f2", 0, "76a518b4-92f0-4b97-b4c2-86bb109ef976", "admin@moneytree.com", false, null, "Admin", 0f, "Admin", false, null, "ADMIN@MONEYTREE.COM", "ADMIN@MONEYTREE.COM", "AQAAAAEAACcQAAAAEEl4fAPB/CWXfGni43LDNU1JO96F5mc5ceYhEGPB2UFthlEBjTmr1ePgzCaEonK39g==", null, false, "e9fe2648-269a-4959-8455-008a9455584b", "Admin", false, "admin@moneytree.com" });
+                values: new object[] { "1a4df6c2-e479-40eb-8135-d492174424f2", 0, "76a518b4-92f0-4b97-b4c2-86bb109ef976", "admin@moneytree.com", false, null, "Admin", 0f, "Admin", false, null, "ADMIN@MONEYTREE.COM", "ADMIN@MONEYTREE.COM", "AQAAAAEAACcQAAAAEPYb3b4zJpQYui0nhvG2VAoGy7xyE2IEzCMUx//nKhm9Ir3A0nc2kol4QVFkJOBhWQ==", null, false, "a0a55c62-9508-4e0c-a42f-ca9c99c54c7f", "Admin", false, "admin@moneytree.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -342,6 +362,11 @@ namespace DissertationProject.Migrations
                 column: "FamilyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FamilyBudgets_FamilyId",
+                table: "FamilyBudgets",
+                column: "FamilyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FamilyMembers_FamilyId",
                 table: "FamilyMembers",
                 column: "FamilyId");
@@ -381,6 +406,9 @@ namespace DissertationProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "FamilyBills");
+
+            migrationBuilder.DropTable(
+                name: "FamilyBudgets");
 
             migrationBuilder.DropTable(
                 name: "FamilyMembers");

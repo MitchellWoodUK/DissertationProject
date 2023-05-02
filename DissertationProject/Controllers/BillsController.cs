@@ -71,7 +71,7 @@ namespace DissertationProject.Controllers
                     return RedirectToAction("ViewAll");
                 }
             }
-            TempData["Success"] = "";
+            TempData["Success"] = "Bill successfully added!";
             return RedirectToAction("ViewAll");
         }
 
