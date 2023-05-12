@@ -87,12 +87,12 @@
                                 <p class="text">Step 1 - Enter your Surname:</p>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Family Name</label>
-                                    <input type="text" class="form-control" id="name" name="name">
+                                    <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <p class="text">Step 2 - Enter a memorable 4 digit PIN:</p>
                                 <div class="mb-3">
                                     <label for="pin" class="form-label">Family PIN</label>
-                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="4">
+                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="4" required>
                                 </div>
                                 <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100" id="submitCreate">Create Family</button>
                             </form>
@@ -107,12 +107,12 @@
                                 <p class="text">Step 1 - Enter your Families Surname:</p>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Family Name</label>
-                                    <input type="text" class="form-control" id="name" name="name">
+                                    <input type="text" class="form-control" id="joinname" name="name" required>
                                 </div>
                                 <p class="text">Step 2 - Enter the memorable 4 digit PIN that is linked to your family:</p>
                                 <div class="mb-3">
                                     <label for="pin" class="form-label">Family PIN</label>
-                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="4">
+                                    <input type="text" class="form-control" id="joinpin" name="pin" maxlength="4" required>
                                 </div>
                                 <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100" id="submitJoin">Join Family</button>
                             </form>
@@ -144,7 +144,7 @@
                             <input type="hidden" name="familyId" value="@family.Family.Id" />
                             <div class="mb-3">
                                 <label for="name" class="form-label">Enter the Correct Family Name To Unlink Account:</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="@family.Family.Name">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="@family.Family.Name" required>
                             </div>
                             <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger w-100" id="unlinkbtn">Unlink Account</button>
                         </form>

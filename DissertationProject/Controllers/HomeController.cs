@@ -37,7 +37,7 @@ namespace DissertationProject.Controllers
             {
                 //Need to get the family that the user is in.
                 var family = _db.Families.FirstOrDefaultAsync(i => i.Id == user.Result.FamilyId);
-                if(family != null)
+                if(user.Result.FamilyId != null)
                 {
                     //Need to get the family members that are in the family.
                     var familyMembers = _db.FamilyMembers.Where(i => i.FamilyMember.FamilyId == family.Result.Id).ToList();
@@ -48,24 +48,30 @@ namespace DissertationProject.Controllers
                     //Need to get the transactions that are in the family.
                     var familyTransactions = _db.FamilyTransactions.Where(i => i.FamilyId == family.Result.Id).ToList();
                     //Calculates the total amount of transactions and bills.
-                    float totalTransactions = familyTransactions.Sum(item => item.Amount);
-                    float totalBills = familyBills.Sum(item => item.Amount);
-                    //Calculates the total amount of expenses and profit.
-                    float totalExpenses = totalTransactions + totalBills;
-                    float totalProfit = _db.FamilyBudgets.FirstOrDefault(i => i.FamilyId == family.Result.Id).Budget - totalExpenses;
-
-                    //Creates a chart view model and then adds it to the list made earlier.
-                    chartList.Add(new ChartViewModel()
+                    if (familyBills.Count != 0 && familyBudgets.Count != 0 && familyTransactions.Count != 0)
                     {
-                        Members = familyMembers,
-                        Bills = familyBills,
-                        Budgets = familyBudgets,
-                        Transactions = familyTransactions,
-                        Expenses = totalExpenses,
-                        Profit = totalProfit
-                    });
-                    //return to the view with the list.
-                    return View(chartList);
+                        float totalTransactions = familyTransactions.Sum(item => item.Amount);
+                        float totalBills = familyBills.Sum(item => item.Amount);
+                        //Calculates the total amount of expenses and profit.
+                        float totalExpenses = totalTransactions + totalBills;
+                        float totalProfit = _db.FamilyBudgets.FirstOrDefault(i => i.FamilyId == family.Result.Id).Budget - totalExpenses;
+
+                        //Creates a chart view model and then adds it to the list made earlier.
+                        chartList.Add(new ChartViewModel()
+                        {
+                            Members = familyMembers,
+                            Bills = familyBills,
+                            Budgets = familyBudgets,
+                            Transactions = familyTransactions,
+                            Expenses = totalExpenses,
+                            Profit = totalProfit
+                        });
+                        //return to the view with the list.
+                        return View(chartList);
+                    }
+                    
+
+                   
                 }
                 else
                 {
@@ -177,6 +183,7 @@ namespace DissertationProject.Controllers
                     //Creates the family and saves it to the database.
                     await _db.Families.AddAsync(family);
                     await _db.SaveChangesAsync();
+                    
                 }
                 else
                 {
@@ -205,7 +212,7 @@ namespace DissertationProject.Controllers
 
                 //Save all the changes
                 await _db.SaveChangesAsync();
-
+                TempData["Success"] = "Family Created!";
                 return RedirectToAction("Settings");
             }
             else
@@ -282,12 +289,21 @@ namespace DissertationProject.Controllers
 
             //Remove the instance in FamilyMembersModel
             _db.FamilyMembers.Remove(family);
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (result.Succeeded)
+            {
+                //Save changes
+                await _db.SaveChangesAsync();
 
-            //Save changes
-            await _db.SaveChangesAsync();
-
-            TempData["Success"] = "Family Account Unlinked!";
-            return RedirectToAction("Settings");
+                TempData["Success"] = "Family Account Unlinked!";
+                return RedirectToAction("Settings");
+            }
+            else
+            {
+                TempData["Danger"] = "Error - Cannot Unlink Family!";
+                return RedirectToAction("Settings");
+            }
         }
     }
 }
