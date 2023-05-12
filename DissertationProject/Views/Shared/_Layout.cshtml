@@ -13,10 +13,10 @@
     <header>
         <nav class="navbar navbar-toggleable-sm navbar-light border-bottom box-shadow navbar-bg">
             <div class="container-fluid d-flex align-items-center">
-                <button class="navbar-toggler d-inline" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler d-inline" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" id="burgerbtn">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand d-inline-flex ms-3" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand d-inline-flex ms-3" asp-area="" asp-controller="Home" asp-action="Index" >
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <img src="~/images/money.png" alt="logo" height="50">
@@ -38,16 +38,16 @@
         <div class="collapse navbar-collapse alt-navbar-bg" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 ms-2">
                 <li class="nav-item">
-                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Home" asp-action="Index" id="indexNav">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Transaction" asp-action="ViewAll">Transactions</a>
+                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Transaction" asp-action="ViewAll" id="transactionNav">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Bills" asp-action="ViewAll">Bills</a>
+                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Bills" asp-action="ViewAll" id="billsNav">Bills</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Budget" asp-action="Manage">Budget</a>
+                    <a class="nav-link heading-text white-text" asp-area="" asp-controller="Budget" asp-action="Manage" id="budgetNav">Budget</a>
                 </li>
             </ul>
         </div>

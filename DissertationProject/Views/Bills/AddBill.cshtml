@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <a class="btn btn-secondary mt-3 mb-5" asp-controller="Bills" asp-action="ViewAll">< Back</a>
+            <a class="btn btn-secondary mt-3 mb-5" asp-controller="Bills" asp-action="ViewAll" id="backbtn">< Back</a>
             <h3 class="heading-text">Add a new Bill</h3>
             <form method="post" class="my-3">
                 <div class="mb-3">
@@ -37,7 +37,7 @@
                     <label for="dateDue" class="form-label">Date Due - Enter the day of the month the bill is due.</label>
                     <input type="number" class="form-control" id="dateDue" name="dateDue" min="1" max="31">
                 </div>
-                <button type="submit" class="btn btn-success mt-5">Create</button>
+                <button type="submit" class="btn btn-success mt-5" id="submitbtn">Create</button>
             </form>
         </div>
     </div>

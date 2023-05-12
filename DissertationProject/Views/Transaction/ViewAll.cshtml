@@ -11,7 +11,7 @@
         <div class="col d-flex justify-content-end">
             <a class="btn btn-col white-text mb-5" asp-controller="Transaction" asp-action="AddTransaction">New Transaction</a>
             <form method="post" class="ms-3" action="@Url.Action("RemoveMonth", "Transaction")" onsubmit="return confirm('Are you sure you want to remove the past month of transactions');">
-                <button type="submit" class="btn btn-danger w-100">Delete Past Month</button>
+                <button type="submit" class="btn btn-danger w-100" id="deletepastbtn">Delete Past Month</button>
             </form>
         </div>
 
@@ -54,7 +54,7 @@
                         </td>
                         <td>
                             <form method="post" action="@Url.Action("DeleteTransaction", "Transaction", new { id = @item.Transaction.Id })" onsubmit="return confirm('Are you sure you want to delete this transaction?');">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger" id="deletebtn">Delete</button>
                             </form>
                         </td>
                     </tr>
