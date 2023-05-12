@@ -21,19 +21,13 @@ namespace DissertationProject.Tests
             driver = new ChromeDriver(@"\Drivers\chromedriver_win32", ops);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            // Quit the driver and dispose of it
-            driver.Quit();
-            driver.Dispose();
-        }
+   
 
         [Test]
         public void canLoginToAnAccount()
         {
             // Navigate to the register page
-            driver.Navigate().GoToUrl("https://dissertationproject.azurewebsites.net/Identity/Account/Login");
+            driver.Navigate().GoToUrl("https://localhost:7170/Identity/Account/Login");
             // Fill in the registration form inputs
 
             IWebElement emailInput = driver.FindElement(By.Id("Input_Email"));
@@ -53,7 +47,7 @@ namespace DissertationProject.Tests
 
             // Verify that the registration was successful
             //Assert
-            Assert.IsTrue(driver.Url.Contains("https://dissertationproject.azurewebsites.net/"));
+            Assert.IsTrue(driver.Url.Contains("https://localhost:7170/"));
         }
 
 
@@ -61,7 +55,7 @@ namespace DissertationProject.Tests
         public void RejectIncorrectLoginData()
         {
             // Navigate to the register page
-            driver.Navigate().GoToUrl("https://dissertationproject.azurewebsites.net/Identity/Account/Register");
+            driver.Navigate().GoToUrl("https://localhost:7170/Identity/Account/Login");
 
             // Fill in the registration form inputs with incorrect data
             IWebElement emailInput = driver.FindElement(By.Id("Input_Email"));

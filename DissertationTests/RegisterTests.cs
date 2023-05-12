@@ -17,23 +17,17 @@ namespace DissertationProject.Tests
         {
             ChromeOptions ops = new ChromeOptions();
             //Tests run in the background.
-            ops.AddArgument("--headless");
+            //ops.AddArgument("--headless");
             driver = new ChromeDriver(@"\Drivers\chromedriver_win32", ops);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            // Quit the driver and dispose of it
-            driver.Quit();
-            driver.Dispose();
-        }
+      
 
         [Test]
         public void CanRegisterNewAccount()
         {
             // Navigate to the register page
-            driver.Navigate().GoToUrl("https://dissertationproject.azurewebsites.net/Identity/Account/Register");
+            driver.Navigate().GoToUrl("https://dissertationdeployment.azurewebsites.net/Identity/Account/Register");
             // Fill in the registration form inputs
             IWebElement fnameInput = driver.FindElement(By.Id("Input_Fname"));
             fnameInput.SendKeys("John");
@@ -61,7 +55,7 @@ namespace DissertationProject.Tests
 
             // Verify that the registration was successful
             //Assert
-            Assert.IsTrue(driver.Url.Contains("https://dissertationproject.azurewebsites.net/"));
+            Assert.IsTrue(driver.Url.Contains("https://dissertationdeployment.azurewebsites.net/"));
         }
 
 
@@ -69,7 +63,7 @@ namespace DissertationProject.Tests
         public void RejectIncorrectData()
         {
             // Navigate to the register page
-            driver.Navigate().GoToUrl("https://dissertationproject.azurewebsites.net/Identity/Account/Register");
+            driver.Navigate().GoToUrl("https://dissertationdeployment.azurewebsites.net/Identity/Account/Register");
 
             // Fill in the registration form inputs with incorrect data
             IWebElement fnameInput = driver.FindElement(By.Id("Input_Fname"));
