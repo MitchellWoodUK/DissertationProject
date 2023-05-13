@@ -5,23 +5,24 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
+            <a class="btn btn-secondary mt-3 mb-5" asp-controller="Bills" asp-action="ViewAll" id="backbtn">< Back</a>
             <h3 class="heading-text">Add a new Transaction</h3>
             <form method="post" class="my-3">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="description" name="description">
+                    <input type="text" class="form-control" id="description" name="description" required>
                 </div>
                 <div class="mb-3">
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="number" class="form-control" id="amount" name="amount" step="any">
+                    <input type="number" class="form-control" id="amount" name="amount" step="any" required>
                 </div>
                 <label for="transactionType" class="form-label">Type</label>
 
-                <select class="form-select" id="transactionType">
+                <select class="form-select" id="transactionType" required>
                     <option selected disabled>Transaction Type:</option>
                     <option value="Food">Food</option>
                     <option value="Restaurant">Restaurant</option>
