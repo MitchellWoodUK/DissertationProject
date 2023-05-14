@@ -4,9 +4,11 @@
     ViewData["Title"] = "Settings";
 }
 
+<a class="btn btn-secondary mt-3 mb-5 ms-5" asp-controller="Home" asp-action="Settings" id="backbtn">< Back</a>
 
 <div class="container mt-5">
     <div class="row">
+
         @if (TempData["Success"] != null)
         {
             <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
