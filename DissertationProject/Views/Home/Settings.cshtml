@@ -59,7 +59,7 @@
                     <label for="income" class="form-label">Income</label>
                     <input type="number" class="form-control" id="income" name="income" placeholder="@user.Income">
                 </div>
-                <button type="submit" asp-controller="Home" asp-action="UpdateUser" class="btn btn-col w-100 white-text" id="submitbtn">Save Changes To Your Account</button>
+                <button type="submit" asp-controller="Home" asp-action="UpdateUser" class="btn btn-col w-100 white-text" id="submitbtn" name="submitbtn">Save Changes To Your Account</button>
             </form>
         </div>
     </div>
@@ -94,7 +94,7 @@
                                     <label for="pin" class="form-label">Family PIN</label>
                                     <input type="text" class="form-control" id="pin" name="pin" maxlength="4" required>
                                 </div>
-                                <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100" id="submitCreate">Create Family</button>
+                                <button type="submit" asp-controller="Home" asp-action="CreateFamily" class="btn btn-success w-100" id="submitCreate" name="submitCreate">Create Family</button>
                             </form>
                         </div>
 
@@ -114,7 +114,7 @@
                                     <label for="pin" class="form-label">Family PIN</label>
                                     <input type="text" class="form-control" id="joinpin" name="pin" maxlength="4" required>
                                 </div>
-                                <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100" id="submitJoin">Join Family</button>
+                                <button type="submit" asp-controller="Home" asp-action="JoinFamily" class="btn btn-success w-100" id="submitJoin" name="submitJoin">Join Family</button>
                             </form>
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                                 <label for="name" class="form-label">Enter the Correct Family Name To Unlink Account:</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="@family.Family.Name" required>
                             </div>
-                            <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger w-100" id="unlinkbtn">Unlink Account</button>
+                            <button type="submit" asp-controller="Home" asp-action="UnlinkFamily" class="btn btn-danger w-100" id="unlinkbtn" name="unlinkbtn">Unlink Account</button>
                         </form>
                     }
                 }
