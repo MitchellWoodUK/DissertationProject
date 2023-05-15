@@ -14,7 +14,6 @@ namespace DissertationProject.Data
         public DbSet<FamilyBillModel> FamilyBills { get; set; }
         public DbSet<FamilyBudgetModel> FamilyBudgets { get; set; }
 
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -65,7 +64,6 @@ namespace DissertationProject.Data
                  ConcurrencyStamp = "16e1cc37-4269-4096-880c-53b14399beff"
              });
         }
-
         private void SeedAdmin(ModelBuilder builder)
         {
             //Method that seeds the admin account and provides it with all the necessary data.

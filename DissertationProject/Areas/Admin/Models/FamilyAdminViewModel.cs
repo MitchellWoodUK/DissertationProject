@@ -7,7 +7,5 @@ namespace DissertationProject.Areas.Admin.Models
     {
         public FamilyModel Family { get; set; }
         public List<FamilyMembersModel> FamilyMembers { get; set; }
-
     }
 }
-

@@ -13,4 +13,3 @@ namespace DissertationProject.Enums
         Other
     }
 }
-

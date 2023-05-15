@@ -7,4 +7,3 @@ namespace DissertationProject.Models
         public List<string> Roles { get; set; }
     }
 }
-

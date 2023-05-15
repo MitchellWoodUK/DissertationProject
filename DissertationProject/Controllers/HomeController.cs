@@ -69,10 +69,7 @@ namespace DissertationProject.Controllers
                         //return to the view with the list.
                         return View(chartList);
                     }
-                    
-
-                   
-                }
+                 }
                 else
                 {
                     //If family is null then return an empty list.
@@ -108,9 +105,7 @@ namespace DissertationProject.Controllers
                 }
             }
             return View(FMlist);
-
         }
-
 
         //Post function to update the institution for the user.
         [HttpPost]
@@ -141,7 +136,6 @@ namespace DissertationProject.Controllers
                     {
                         user.Income = model.Income;
                     }
-
                     //Updates the database.
                     _db.Users.Update(user);
                     await _db.SaveChangesAsync();
@@ -183,14 +177,12 @@ namespace DissertationProject.Controllers
                     //Creates the family and saves it to the database.
                     await _db.Families.AddAsync(family);
                     await _db.SaveChangesAsync();
-                    
                 }
                 else
                 {
                     TempData["Danger"] = "Family Already Exists! Please Join!";
                     return RedirectToAction("Settings");
                 }
-
                 //Need to create the FamilyMemberModel
                 //Creates the empty family members model.
                 FamilyMembersModel members = new FamilyMembersModel();
@@ -206,10 +198,8 @@ namespace DissertationProject.Controllers
                 //Need to add te familyId to the customusermodel.
                 user.FamilyId = members.Family.Id;
                 _db.Users.Update(user);
-
                 //Need to add the family head role to the user.
                 await _userManager.AddToRoleAsync(user, "Family_Head");
-
                 //Save all the changes
                 await _db.SaveChangesAsync();
                 TempData["Success"] = "Family Created!";
@@ -247,7 +237,6 @@ namespace DissertationProject.Controllers
 
                         await _db.SaveChangesAsync();
                         return RedirectToAction("Settings");
-
                     }
                     else
                     {

@@ -29,8 +29,5 @@ namespace DissertationProject.Models
 
         [Required]
         public int DateDue { get; set; }
-
-
     }
 }
-

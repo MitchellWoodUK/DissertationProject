@@ -26,7 +26,6 @@ namespace DissertationProject.Controllers
             _db = db;
         }
 
-        // GET: /<controller>/
         public async Task<IActionResult> Manage()
         {
             //Need to return a list of the families budget model.
@@ -55,7 +54,6 @@ namespace DissertationProject.Controllers
             return View(BudgetList);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(FamilyBudgetModel model)
         {
@@ -80,10 +78,8 @@ namespace DissertationProject.Controllers
                     return RedirectToAction("Manage");
                 }
             }
-
             return RedirectToAction("Manage");
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Update(FamilyBudgetModel model)
@@ -101,7 +97,6 @@ namespace DissertationProject.Controllers
                     await _db.SaveChangesAsync();
                     TempData["Success"] = "Budget Updated!";
                     return RedirectToAction("Manage");
-
                 }
                 else
                 {
@@ -115,4 +110,3 @@ namespace DissertationProject.Controllers
         }
     }
 }
-

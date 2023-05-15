@@ -13,4 +13,3 @@ namespace DissertationProject.Models
 		public CustomUserModel FamilyMember { get; set; }
 	}
 }
-

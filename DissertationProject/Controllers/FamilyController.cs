@@ -23,7 +23,6 @@ namespace DissertationProject.Controllers
             _db = db;
         }
 
-
         public async Task<IActionResult> Manage()
         {
             //Need to return a list of all users that are linked to the current family id of the user that is logged in.
@@ -34,7 +33,6 @@ namespace DissertationProject.Controllers
 
             if (user != null)
             {
-
                 foreach (var item in users)
                 {
                     if (item.FamilyId == user.FamilyId)
@@ -64,11 +62,9 @@ namespace DissertationProject.Controllers
             {
                 return RedirectToAction("Index");
             }
-
             //Need to send the users information accross to the view so that a role can be added to their account.
             return View(user);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> AddRole(ManageUserRolesViewModel model)
@@ -96,12 +92,6 @@ namespace DissertationProject.Controllers
                 TempData["Danger"] = "Error Adding Role!";
                 return RedirectToAction("Manage");
             }
-
         }
-
-
-
-
     }
 }
-

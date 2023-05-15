@@ -10,4 +10,3 @@ namespace DissertationProject.Models
         public float Expenses { get; set; }
     }
 }
-

@@ -27,15 +27,12 @@ namespace DissertationProject.Areas.Admin.Controllers
             _db = db;
         }
 
-
-
         public IActionResult Manage()
         {
             // Create an empty list to store FamilyAdminViewModel objects
             var FMlist = new List<FamilyAdminViewModel>();
             // Get all families from the database
             var families = _db.Families.ToList();
-
 
             foreach (var family in families)
             {
@@ -54,7 +51,6 @@ namespace DissertationProject.Areas.Admin.Controllers
             }
             return View(FMlist);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> RemoveFamily(int id)
@@ -78,9 +74,5 @@ namespace DissertationProject.Areas.Admin.Controllers
             // redirect back to the Manage page
             return RedirectToAction("Manage");
         }
-
-
-
     }
 }
-

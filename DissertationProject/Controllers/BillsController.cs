@@ -24,7 +24,6 @@ namespace DissertationProject.Controllers
             _db = db;
         }
 
-
         public async Task<IActionResult> ViewAll()
         {
             //Needs to return a list of all the bills linked to the current logged in users family id.
@@ -88,7 +87,5 @@ namespace DissertationProject.Controllers
             TempData["Success"] = "Bill Deleted!";
             return RedirectToAction("ViewAll");
         }
-
     }
 }
-

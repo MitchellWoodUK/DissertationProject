@@ -15,4 +15,3 @@ namespace DissertationProject.Models
         public string PIN { get; set; }
     }
 }
-

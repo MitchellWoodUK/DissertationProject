@@ -3,9 +3,6 @@
     ViewData["Title"] = "All Transaction";
 }
 
-
-
-
 <div class="container mt-5">
     <div class="row">
         <div class="col d-flex justify-content-end">
@@ -14,8 +11,8 @@
                 <button type="submit" class="btn btn-danger w-100" id="deletepastbtn">Delete Past Month</button>
             </form>
         </div>
-
     </div>
+
     <div class="row">
         @if (TempData["Success"] != null)
         {
@@ -83,12 +80,11 @@
     </div>
 </div>
 
-
-
 <script>
     setTimeout(function () {
         var successMessage = document.getElementById('successMessage');
         if (successMessage != null) {
             successMessage.remove();
         }
-    }, 5000);</script>
+    }, 5000);
+</script>

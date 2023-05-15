@@ -21,8 +21,6 @@ namespace DissertationProject.Controllers
             _db = db;
         }
 
-
-
         public async Task<IActionResult> ViewAll()
         {
             //Need to return a list of all transactions that are linked to the current family id of the user that is logged in.
@@ -41,18 +39,14 @@ namespace DissertationProject.Controllers
                     };
                     TMList.Add(TM);
                 }
-
             }
             return View(TMList);
-
         }
-
 
         public IActionResult AddTransaction()
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> AddTransaction(FamilyTransactionModel transaction)
@@ -76,7 +70,6 @@ namespace DissertationProject.Controllers
                     TempData["Danger"] = "You need to be a part of a family first! - Please do this in the settings.";
                     return RedirectToAction("ViewAll");
                 }
-
             }
             return RedirectToAction("ViewAll");
         }
@@ -117,6 +110,5 @@ namespace DissertationProject.Controllers
             TempData["Success"] = "Transaction Deleted!";
             return RedirectToAction("ViewAll");
         }
-
     }
 }

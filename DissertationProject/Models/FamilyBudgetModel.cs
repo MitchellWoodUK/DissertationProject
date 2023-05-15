@@ -17,4 +17,3 @@ namespace DissertationProject.Models
         public float Budget { get; set; }
     }
 }
-
